@@ -76,7 +76,7 @@ get_header(); ?>
           <div class="col-md-4">
             <ul class="media-list">
               <li class="media">
-                <a class="pull-left" href="#"><img class="media-object" src="<?php echo get_template_directory_uri(); ?>/images/foto07.png" height="64" width="64"></a>
+                <a class="pull-left" href="#"><img class="media-object" src="<?php echo get_template_directory_uri(); ?>/images/projetor64x64.png" height="64" width="64"></a>
                 <div class="media-body">
                   <h3 class="media-heading">
                     <a href="/sessoes">

@@ -197,7 +197,7 @@ get_header(); ?>
 <hr />
           <div class="row">
             <div class="col-md-4">
-              <img src="<?php echo get_template_directory_uri(); ?>/images/foto07.png" class="center-block img-responsive">
+              <img src="<?php echo get_template_directory_uri(); ?>/images/projetor400x400.png" class="center-block img-responsive">
               <h2 class="text-center">
                 <a href="<?php echo esc_url( home_url( '/' ) ); ?>cineclubes"><?php echo $cineclubes; ?> Cineclubes</a>
               </h2>
