@@ -211,7 +211,7 @@ get_header(); ?>
             <div class="col-md-4">
               <img src="<?php echo get_template_directory_uri(); ?>/images/foto04_numeros_01.jpg.png" class="center-block img-responsive">
               <h2 class="text-center">
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>sessoes-realizadas"><?php echo $expectadores; ?> Espectadores</a>
+                <a href="downloads/extracao.csv"><?php echo $expectadores; ?> Espectadores</a>
               </h2>
             </div>
           </div>

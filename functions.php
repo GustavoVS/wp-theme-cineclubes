@@ -147,3 +147,58 @@ function custom_pagination($numpages = '', $pagerange = '', $paged='') {
   }
 
 }
+
+add_action('template_redirect','extracao_template_redirect');
+
+function extracao_template_redirect() { 
+  if ($_SERVER['REQUEST_URI']=='/downloads/extracao.csv') { 
+      header("Content-type: application/x-msdownload",true,200);
+      header("Content-Disposition: attachment; filename=Cineclubes_".date('YmdHis',time()).".csv");
+      header("Pragma: no-cache");
+      header("Expires: 0");
+      echo cineclubes_extracao();
+      exit();
+    }
+}
+
+function cineclubes_extracao(){ 
+  $args       = array('post_type' => array('sessao', 'relatorio_sessao') ); 
+  $posts      = new WP_Query($args);
+  $csv      = 'Sessão;Cineclube;Data;Horário;Endereço;Número;Complemento;Bairro;Cidade;Estado;CEP;Requisito;Filmes;'."\n";
+  $campos     = array(
+            'cineclube_nome',
+            'data',
+            'horario',            
+            'logradouro',
+            'numero',
+            'complemento',
+            'bairro',
+            'cidade',
+            'estado',
+            'cep',
+            'requisito',    
+          );
+
+  while ( $posts->have_posts() ) {        
+    $posts->the_post();   
+    $pref     = $posts->post->post_type == 'sessao'?'ss_':'rs_';
+    $csv    .= $posts->post->post_title.$pref.';';
+    foreach ($campos as $campo) {     
+      $csv  .= rwmb_meta( $pref.$campo, 'type=text', $posts->post->ID  ).';';     
+    }
+    for($i = 1; $i <= 16; $i++){
+            $csv  .= rwmb_meta($pref.'nome_filme'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'nome_original'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'direcao'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'ano'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'pais'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'idioma'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'sinopse'.$i, 'type=text', $posts->post->ID).';';
+            $csv  .= rwmb_meta($pref.'classificacao'.$i, 'type=text', $posts->post->ID).';';            
+    }
+    $csv .= "\n";
+  }
+
+  wp_reset_postdata();
+  return $csv;
+}
